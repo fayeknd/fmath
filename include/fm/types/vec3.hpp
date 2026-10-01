@@ -87,7 +87,7 @@ namespace fm {
             return z;
             break;
         default:
-            throw 474L;
+            throw std::out_of_range("vec3 has three components!");;
             return x;
             break;
         }

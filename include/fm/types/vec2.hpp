@@ -71,7 +71,7 @@ namespace fm {
             return y;
             break;
         default:
-            throw 474L;
+            throw std::out_of_range("vec2 has two components!");;
             return x;
             break;
         }
