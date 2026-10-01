@@ -1,4 +1,5 @@
 #pragma once
+#include "../degrad.hpp"
 
 namespace fm {
 
@@ -28,11 +29,14 @@ namespace fm {
         _vec3<T> lerp(_vec3<T> to, T scalar) const;
         T dot(_vec3<T> v) const;
         _vec3<T> cross(_vec3<T> v) const;
-        _vec3<T> transformed(_mat4x4<T>& mat) const;
+        _vec3<T> transformed(const _mat4x4<T>& mat) const;
+        _vec3<T> transform(const _mat4x4<T>& mat) const; 
 
         _vec3<T>& operator+=(const _vec3<T>& v);
         _vec3<T>& operator-=(const _vec3<T>& v);
         _vec3<T>& operator*=(double t);
+        _vec3<T>& operator*=(const _vec3<T>& v);
+        _vec3<T>& operator*=(const _mat4x4<T>& m);
         _vec3<T>& operator/=(double t);
     };
     template <typename T>
@@ -83,7 +87,7 @@ namespace fm {
             return z;
             break;
         default:
-            throw ERROR_INDEX_OUT_OF_BOUNDS;
+            throw 474L;
             return x;
             break;
         }
@@ -132,6 +136,18 @@ namespace fm {
         return *this;
     }
     template <typename T>
+    inline _vec3<T>& _vec3<T>::operator*=(const _vec3<T>& v) {
+        x *= v.x;
+        y *= v.y;
+        z *= v.z;
+        return *this;
+    }
+    template <typename T>
+    inline _vec3<T>& _vec3<T>::operator*=(const _mat4x4<T>& m) {
+        *this = this->transformed(m);
+        return *this; 
+    }
+    template <typename T>
     inline _vec3<T>& _vec3<T>::operator/=(double t) {
         return *this *= (1 / t);
     }
@@ -154,6 +170,10 @@ namespace fm {
     template <typename T>
     inline _vec3<T> operator*(const _vec3<T>& u, const _vec3<T>& v) {
         return _vec3<T>(u.x * v.x, u.y * v.y, u.z * v.z);
+    }
+    template <typename T>
+    inline _vec3<T> operator*(const _vec3<T>& u, const _mat4x4<T> m) {
+        return u.transformed(m);
     }
     template <typename T>
     inline _vec3<T> operator^(const _vec3<T>& u, const _vec3<T>& v) {

@@ -1,4 +1,5 @@
 #pragma once
+#include "../degrad.hpp"
 
 namespace fm {
 
@@ -70,7 +71,7 @@ namespace fm {
             return y;
             break;
         default:
-            throw ERROR_INDEX_OUT_OF_BOUNDS;
+            throw 474L;
             return x;
             break;
         }

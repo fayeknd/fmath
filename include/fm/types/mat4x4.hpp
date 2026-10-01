@@ -303,13 +303,18 @@ namespace fm {
         return _;
     }
     template <typename T>
-    inline _vec3<T> _vec3<T>::transformed(_mat4x4<T>& mat) const {
+    inline _vec3<T> _vec3<T>::transformed(const _mat4x4<T>& mat) const {
         _vec3<T> _;
         _.x = x * mat.m_data[0][0] + y * mat.m_data[1][0] + z * mat.m_data[2][0] + 1.0f * mat.m_data[3][0];
         _.y = x * mat.m_data[0][1] + y * mat.m_data[1][1] + z * mat.m_data[2][1] + 1.0f * mat.m_data[3][1];
         _.z = x * mat.m_data[0][2] + y * mat.m_data[1][2] + z * mat.m_data[2][2] + 1.0f * mat.m_data[3][2];
         
         return _;
+    }
+    template <typename T>
+    inline _vec3<T> _vec3<T>::transform(const _mat4x4<T>& mat) const {
+        *this = this->transformed(mat);
+        return *this;
     }
     template <typename T>
     inline _mat4x4<T> _mat4x4<T>::transposed() {
